@@ -4,9 +4,9 @@ from db.schemas import SetupkeyCreate
 
 router = APIRouter()
 
-@router.post("/setup-keys")
+@router.post("/api/setup-keys")
 async def create_setupkey(setupkey: SetupkeyCreate):
-    response = await setupkey_api.create_setupkey(name=setupkey.name, datetime_created=setupkey.datetime_created)
+    response = setupkey_api.create_setupkey(name=setupkey.name, datetime_created=setupkey.datetime_created)
     return Response(response.content,response.status_code,response.headers)
 
 

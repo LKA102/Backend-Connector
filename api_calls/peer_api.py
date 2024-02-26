@@ -1,4 +1,4 @@
-import httpx
+import requests
 import os
 from dotenv import load_dotenv
 
@@ -10,14 +10,14 @@ headers = {
         'Authorization':f"Token {os.getenv('TOKEN_API')}"
     }
 
-async def get_peer_network(id_network: str):
-    async with httpx.AsyncClient() as client:
-        response = await client.get(f"{os.getenv('API_URI')}/api/peers/{id_network}", headers=headers)
+def get_peer_network(id_network: str):
+    with requests.Session() as client:
+        response = client.get(f"{os.getenv('API_URI')}/api/peers/{id_network}", headers=headers)
         return response
     
-async def get_all_peers():
-    async with httpx.AsyncClient() as client:
-        response = await client.get(f"{os.getenv('API_URI')}/api/peers", headers=headers)
+def get_all_peers():
+    with requests.Session() as client:
+        response = client.get(f"{os.getenv('API_URI')}/api/peers", headers=headers)
         return response
     
 

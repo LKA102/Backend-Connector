@@ -6,26 +6,25 @@ from db.schemas import PeerCreate
 from api_calls import peer_api
 router = APIRouter()
 
-@router.get("/peers/{id}")
+@router.get("/api/peers/{id}")
 async def retrieve_peer(id: str, db:Session = Depends(get_db)):
     db_peer = get_peer(db=db, peer_id=id)
     if not db_peer:
        raise HTTPException(
            status_code=status.HTTP_404_NOT_FOUND, detail="Peer does not exist"
        )
-    response = await peer_api.get_peer_network(db_peer.id_network)
+    response = peer_api.get_peer_network(db_peer.id_network)
     return Response(response.content, response.status_code, response.headers)
 
 
-
-@router.get("/peers")
+@router.get("/api/peers")
 async def list_peers():
-    response = await peer_api.get_all_peers()
+    response = peer_api.get_all_peers()
     return Response(response.content, response.status_code, response.headers)
 
-@router.post("/peers")
+@router.post("/api/peers")
 async def save_peer(peer: PeerCreate, db:Session = Depends(get_db)):
-    response_peers = await peer_api.get_all_peers()
+    response_peers = peer_api.get_all_peers()
     if response_peers.status_code != 200:
         raise HTTPException(
             #Si hay error, fijars en la api de netbird (El error que mando aqui es generico)

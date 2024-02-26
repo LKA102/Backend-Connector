@@ -1,4 +1,4 @@
-import httpx
+import requests
 import json
 import os
 from dotenv import load_dotenv
@@ -13,10 +13,10 @@ headers = {
         'Authorization':f"Token {os.getenv('TOKEN_API')}"
     }
 
-async def create_setupkey(name: str, datetime_created: datetime):
+def create_setupkey(name: str, datetime_created: datetime):
     payload = json.dumps({
         "name": f'{name}-{datetime_created}',
-        "type": "reusable",
+        "type": "one-off",
         "expires_in": 86400,
         "revoked": False,
         "auto_groups": [
@@ -25,6 +25,6 @@ async def create_setupkey(name: str, datetime_created: datetime):
         "usage_limit": 0,
         "ephemeral": True
     })
-    async with httpx.AsyncClient() as client:
-        response = await client.post(f"{os.getenv('API_URI')}/api/setup-keys", headers=headers, data=payload)
+    with requests.Session() as client:
+        response = client.post(f"{os.getenv('API_URI')}/api/setup-keys", headers=headers, data=payload)
         return response
