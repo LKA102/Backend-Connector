@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from db import models, schemas
 
-def get_peer(db: Session, peer_id: int):
+def get_peer(db: Session, peer_id: str):
     return db.query(models.Peer).filter(models.Peer.id == peer_id).first()
 
 def create_peer(db:Session, peer: schemas.PeerCreate, network_id: str):

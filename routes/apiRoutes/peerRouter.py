@@ -7,7 +7,7 @@ from api_calls import peer_api
 router = APIRouter()
 
 @router.get("/peers/{id}")
-async def retrieve_peer(id: int, db:Session = Depends(get_db)):
+async def retrieve_peer(id: str, db:Session = Depends(get_db)):
     db_peer = get_peer(db=db, peer_id=id)
     if not db_peer:
        raise HTTPException(
