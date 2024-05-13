@@ -20,7 +20,7 @@ def create_setupkey(name: str, datetime_created: datetime):
         "expires_in": 86400,
         "revoked": False,
         "auto_groups": [
-            "cnab0trl0ubs73d9aqjg"
+            "cp193taknhds7393sog0"
         ],
         "usage_limit": 0,
         "ephemeral": True
